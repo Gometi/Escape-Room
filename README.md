@@ -9,6 +9,9 @@ This is a game where the player tries to escape from a Mansion by looking for cl
 
 ![](./wireframes/sample_room_1.jpg)
 
+### Sample Mansion Interior 1
+![](./wireframes/sample_masion_interior_1.jpg)
+
 ## MVP
 - Getting the images for the app
 - Using phaser for the game development
