@@ -1,11 +1,21 @@
 import 'phaser';
 
-import { welcome_scene } from './scenes/welcome_scene';
+import { Welcome_scene } from './scenes/Welcome_scene';
+import { Room1 } from "./scenes/Room1";
 
 const gameConfig = {
     width: 1024,
     height: 720,
-    scene: welcome_scene
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: 0
+        }
+    },
+    scene: [
+        Room1,
+        Welcome_scene
+    ]
 };
 
 new Phaser.Game(gameConfig);
