@@ -1,3 +1,4 @@
+let fan;
 export class Room1 extends Phaser.Scene {
     constructor(test) {
         super(
@@ -5,23 +6,30 @@ export class Room1 extends Phaser.Scene {
         )
     }
     preload() {
+        this.load.atlas('fan', 'assets/fan.png', 'assets/fan.json');
         this.load.image('room1', 'assets/room1.jpg');
         this.load.image('dresser', 'assets/dresser1.png');
     }
 
     create() {
        let room1 = this.add.image(0,0, 'room1').setOrigin(0,0);
-       let dresser = this.add.image(661, 374, 'dresser').setInteractive();
-       dresser.setScale(1.3);
-        this.input.setDraggable(dresser);
-       
+        fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0,0);
+        fan.setScale(.6);
 
+        let frameNames = this.anims.generateFrameNames('fan', {
+            start: 1, end: 17, zeroPad: 4,
+            prefix: 'fan', suffix: '.png'
+        });
 
-       let x = this.add.text(100, 300, '');
-       let y = this.add.text(100, 320, '');
-        
+        this.anims.create({ key: 'rotate', frames: frameNames, frameRate: 17, repeat: -1 });
+        fan.anims.play('rotate');
+       let dresser = this.add.image(665, 319, 'dresser').setInteractive();
+       dresser.setScale(.6);
        
         
+        let x = this.add.text(100, 300, '');
+        let y = this.add.text(100, 320, '');
+        this.input.setDraggable([dresser]);
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;

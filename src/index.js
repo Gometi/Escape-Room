@@ -5,7 +5,7 @@ import { Room1 } from "./scenes/Room1";
 
 const gameConfig = {
     width: 1024,
-    height: 720,
+    height: 700,
     physics: {
         default: 'arcade',
         arcade: {
