@@ -8,6 +8,7 @@ let inventory;
 let inventory_screwdriver;
 let paintingFallComplete;
 let paintingFallStart;
+let inventory_key;
 
 export class Room1 extends Phaser.Scene {
     constructor(test) {
@@ -32,6 +33,7 @@ export class Room1 extends Phaser.Scene {
         this.load.image('mansion_painting', 'assets/mansion_painting.png');
         this.load.image('picture_frame_back', 'assets/picture_frame_back.png');
         this.load.image('picture_frame_back1', 'assets/picture_frame_back1.png');
+        this.load.image('box_key', 'assets/box_key.png');
     }
 
     create() {
@@ -64,6 +66,7 @@ export class Room1 extends Phaser.Scene {
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let picture_frame_back1 = this.add.image(-100, 70, 'picture_frame_back1');
         picture_frame_back1.setScale(1.4, 1);
+        let box_key = this.add.image(-168, 120, 'box_key').setScale(.2);
         let taylor1 = this.add.sprite(-168, -50, 'taylor1').setScale(.6);
         let taylor2 = this.add.sprite(-30, -50, 'taylor2').setScale(.6);
         let taylor3 = this.add.sprite(-30, 120, 'taylor3').setScale(.6);
@@ -74,7 +77,7 @@ export class Room1 extends Phaser.Scene {
         picture_frame_back2.setTint(0x0a0a0a);
         
         let taylor_modal = this.add.container(500, 190);
-        taylor_modal.add([taylor_modal_background, picture_frame_back1, taylor1, taylor2, taylor3, taylor4, taylorClose, picture_frame_back2]);
+        taylor_modal.add([taylor_modal_background, picture_frame_back1, box_key, taylor1, taylor2, taylor3, taylor4, taylorClose, picture_frame_back2]);
         taylor_modal.setAlpha(0);
 
         picture_frame_back.on('pointerup', ()=>{
@@ -112,11 +115,23 @@ export class Room1 extends Phaser.Scene {
             taylorMinigame.rotate(rotateImage, taylor1, taylor1.angle);
             this.time.addEvent({delay: 1100, callback: checkResult})
         });
-
+        let movekey = this.tweens;
         function checkResult(){
             console.log(taylor1.angle)
             if (taylorMinigame.success(taylor1.angle, taylor2.angle, taylor3.angle, taylor4.angle)) {
                 console.log('win')
+                movekey.add({
+                    targets: box_key,
+                    y: 250,
+                    delay: 800,
+                    ease: 'power2',
+                    duration: 1000
+                })
+                taylor1.disableInteractive();
+                taylor2.disableInteractive();
+                taylor3.disableInteractive();
+                taylor4.disableInteractive();
+                box_key.setInteractive();
             }
         }
 
@@ -137,7 +152,27 @@ export class Room1 extends Phaser.Scene {
             taylorMinigame.rotate(rotateImage, taylor4, taylor4.angle);
             this.time.addEvent({ delay: 1100, callback: checkResult })
         });
+        
+        let box_key_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let box_key1 = this.add.image(-45, 111, 'box_key');
+        let close_box_key = this.add.text(-50, 300, 'Close').setInteractive();
+        let box_key_modal = this.add.container(500, 190);
+        box_key_modal.add([box_key_modal_background, box_key1, close_box_key]);
+        box_key_modal.setAlpha(0);
+        box_key.on('pointerup', ()=>{
+            box_key_modal.setAlpha(.9);
+            taylor_modal.setAlpha(0);
+        });
 
+        close_box_key.on('pointerup', () => {
+            box_key_modal.setAlpha(0);
+            this.tweens.add({
+                targets: inventory_key,
+                alpha: 1,
+                delay: 500,
+                duration: 1000
+            })
+        });
         
         
         fan.setScale(.6);
@@ -265,6 +300,13 @@ export class Room1 extends Phaser.Scene {
             paintingFallComplete.addEvent({ delay: 2000, callback: painting_fall_complete });
             paintingFallStart.addEvent({ delay: 400, callback: painting_fall_start });
         }
+
+        inventory_key = this.physics.add.image(300, 0, 'box_key').setScale(.2);
+        inventory_key.setAlpha(0);
+        inventory.add(inventory_key);
+
+
+
 
         function painting_fall_complete() {
             painting.setAlpha(0);
