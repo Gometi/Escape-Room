@@ -1,0 +1,293 @@
+{
+	"textures": [
+		{
+			"image": "painting-fall.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 252,
+				"h": 1384
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "painting-fall0010.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 279,
+						"y": 207,
+						"w": 250,
+						"h": 43
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 250,
+						"h": 43
+					}
+				},
+				{
+					"filename": "painting-fall0011.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 279,
+						"y": 219,
+						"w": 250,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 46,
+						"w": 250,
+						"h": 22
+					}
+				},
+				{
+					"filename": "painting-fall0013.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 279,
+						"y": 207,
+						"w": 249,
+						"h": 47
+					},
+					"frame": {
+						"x": 1,
+						"y": 70,
+						"w": 249,
+						"h": 47
+					}
+				},
+				{
+					"filename": "painting-fall0012.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 279,
+						"y": 211,
+						"w": 249,
+						"h": 39
+					},
+					"frame": {
+						"x": 1,
+						"y": 119,
+						"w": 249,
+						"h": 39
+					}
+				},
+				{
+					"filename": "painting-fall0009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 280,
+						"y": 194,
+						"w": 248,
+						"h": 69
+					},
+					"frame": {
+						"x": 1,
+						"y": 160,
+						"w": 248,
+						"h": 69
+					}
+				},
+				{
+					"filename": "painting-fall0008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 281,
+						"y": 180,
+						"w": 245,
+						"h": 95
+					},
+					"frame": {
+						"x": 1,
+						"y": 231,
+						"w": 245,
+						"h": 95
+					}
+				},
+				{
+					"filename": "painting-fall0007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 283,
+						"y": 167,
+						"w": 241,
+						"h": 120
+					},
+					"frame": {
+						"x": 1,
+						"y": 328,
+						"w": 241,
+						"h": 120
+					}
+				},
+				{
+					"filename": "painting-fall0006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 285,
+						"y": 157,
+						"w": 235,
+						"h": 139
+					},
+					"frame": {
+						"x": 1,
+						"y": 450,
+						"w": 235,
+						"h": 139
+					}
+				},
+				{
+					"filename": "painting-fall0005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 288,
+						"y": 151,
+						"w": 228,
+						"h": 151
+					},
+					"frame": {
+						"x": 1,
+						"y": 591,
+						"w": 228,
+						"h": 151
+					}
+				},
+				{
+					"filename": "painting-fall0004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 291,
+						"y": 148,
+						"w": 221,
+						"h": 157
+					},
+					"frame": {
+						"x": 1,
+						"y": 744,
+						"w": 221,
+						"h": 157
+					}
+				},
+				{
+					"filename": "painting-fall0003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 293,
+						"y": 147,
+						"w": 215,
+						"h": 159
+					},
+					"frame": {
+						"x": 1,
+						"y": 903,
+						"w": 215,
+						"h": 159
+					}
+				},
+				{
+					"filename": "painting-fall0001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 293,
+						"y": 148,
+						"w": 213,
+						"h": 158
+					},
+					"frame": {
+						"x": 1,
+						"y": 1064,
+						"w": 213,
+						"h": 158
+					}
+				},
+				{
+					"filename": "painting-fall0002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1440,
+						"h": 900
+					},
+					"spriteSourceSize": {
+						"x": 294,
+						"y": 147,
+						"w": 212,
+						"h": 159
+					},
+					"frame": {
+						"x": 1,
+						"y": 1224,
+						"w": 212,
+						"h": 159
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:e00ed2ba6d974a8cf50df09f985b486b:cc428f2cc0c55174c75fdbbaedaa6931:536b1b0739b5b491365382cad143c614$"
+	}
+}
