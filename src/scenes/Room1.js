@@ -1,5 +1,6 @@
 let taylorMinigame = require('../taylorMinigame');
 
+let door;
 let fan;
 let painting;
 let painting_on_wall;
@@ -36,11 +37,14 @@ export class Room1 extends Phaser.Scene {
         this.load.image('box_key', 'assets/box_key.png');
         this.load.image('door', 'assets/door.png');
         this.load.image('door1', 'assets/door1.png');
+        this.load.image('open_dresser', 'assets/open_dresser.png');
+        this.load.image('hair_pin', 'assets/hair_pin.png');
+
     }
 
     create() {
         let room1 = this.add.image(0, 0, 'room1').setOrigin(0, 0);
-        let door = this.add.image(545, 201, 'door').setInteractive();
+         door = this.physics.add.image(545, 201, 'door').setInteractive();
         door.setScale(.7, .65);
         door.on('pointerover', () => {
             door.setTint(0xcccccc);
@@ -50,7 +54,7 @@ export class Room1 extends Phaser.Scene {
         });
 
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
-        let dresser = this.add.image(665, 319, 'dresser').setInteractive();
+        let dresser = this.physics.add.image(665, 319, 'dresser').setInteractive();
         dresser.setScale(.63);
 
         
@@ -121,6 +125,7 @@ export class Room1 extends Phaser.Scene {
         let dresser1 = this.add.image(-45, 111, 'dresser');
         let close_dresser = this.add.text(-50, 300, 'Close');
         let dresser_modal = this.add.container(500, 190);
+
         dresser_modal.add([dresser_modal_background, dresser1, close_dresser]);
         dresser_modal.setAlpha(0);
         
@@ -142,6 +147,16 @@ export class Room1 extends Phaser.Scene {
             dresser_modal_background.disableInteractive();
             close_dresser.disableInteractive();
         })
+
+
+        let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let open_dresser = this.add.image(-45, 111, 'open_dresser');
+        let close_open_dresser = this.add.text(-50, 300, 'Close');
+        let open_dresser_modal = this.add.container(500, 190);
+        // let hair_pin = this.add.image(-45, 111, 'hair_pin').setInteractive();
+        // this.input.setDraggable(hair_pin)
+        open_dresser_modal.add([open_dresser_modal_background, open_dresser, close_open_dresser]);
+        open_dresser_modal.setAlpha(0);
 
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let picture_frame_back1 = this.add.image(-100, 70, 'picture_frame_back1');
@@ -254,6 +269,8 @@ export class Room1 extends Phaser.Scene {
                 duration: 1000
             })
             close_box_key.disableInteractive();
+            inventory_key.setInteractive();
+            this.input.setDraggable(inventory_key);
         });
         
         
@@ -384,7 +401,26 @@ export class Room1 extends Phaser.Scene {
 
         inventory_key = this.physics.add.image(300, 0, 'box_key').setScale(.2);
         inventory_key.setAlpha(0);
+
         inventory.add(inventory_key);
+         
+
+        this.physics.add.overlap(inventory_key, dresser, openDresser);
+        let keyCollideWithDresser = false;
+        // let errorText = this.add.text(382, 562, "This KEY doesn't fit!");
+        // errorText.setAlpha(0);
+        let showErrorMessaage = this.tweens;
+        function openDresser() {
+            dresser.body.enable = false;
+            console.log('fdfd')
+            // showErrorMessaage.add({
+            //     targets: errorText,
+            //     delay: 200,
+            //     alpha: 1,
+            //     duration: 2000,
+            //     yoyo: true
+            // })
+        }
 
 
 
