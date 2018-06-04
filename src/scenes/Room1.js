@@ -42,17 +42,44 @@ export class Room1 extends Phaser.Scene {
         let room1 = this.add.image(0, 0, 'room1').setOrigin(0, 0);
         let door = this.add.image(545, 201, 'door').setInteractive();
         door.setScale(.7, .65);
+        door.on('pointerover', () => {
+            door.setTint(0xcccccc);
+        });
+        door.on('pointerout', () => {
+            door.clearTint();
+        });
 
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
         let dresser = this.add.image(665, 319, 'dresser').setInteractive();
+        dresser.setScale(.63);
+
+        
+
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
         picture_frame_back.setScale(.449);
+        picture_frame_back.on('pointerover', () => {
+            picture_frame_back.setTint(0xcccccc);
+        });
+        picture_frame_back.on('pointerout', () => {
+            picture_frame_back.clearTint();
+        });
         painting = this.add.sprite(61, 9, 'painting', 'painting-fall0001.png').setOrigin(0, 0);
         painting_on_wall = this.physics.add.sprite(300, 145, 'painting_on_wall').setInteractive();
-        this.input.setDraggable(painting_on_wall);
+        painting_on_wall.on('pointerover', () => {
+            painting_on_wall.setTint(0xcccccc);
+        });
+        painting_on_wall.on('pointerout', () => {
+            painting_on_wall.clearTint();
+        });
         painting_on_bed = this.add.sprite(248, 309, 'painting_on_bed').setOrigin(0, 0);
         
         let screwdriver1 = this.add.image(874, 342, 'screwdriver1').setInteractive();
+        screwdriver1.on('pointerover', () => {
+            screwdriver1.setTint(0xcccccc);
+        });
+        screwdriver1.on('pointerout', () => {
+            screwdriver1.clearTint();
+        });
         let screwdriverBackground = this.add.image(0, 0, 'black').setScale(1.7);
         let screwdriver2 = this.add.image(-45, 111, 'screwdriver2').setScale(.3);
         let takeScrewdriver = this.add.text(-90, 190, 'Take Screwdriver');
@@ -60,6 +87,8 @@ export class Room1 extends Phaser.Scene {
         let screwdriverContainer = this.add.container(500, 190);
         screwdriverContainer.setAlpha(0);
         screwdriverContainer.add([screwdriverBackground, screwdriver2, takeScrewdriver, screwdriverClose]);
+
+        
         
         let painting_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let mansion_painting = this.add.image(-45, 111, 'mansion_painting');
@@ -85,6 +114,33 @@ export class Room1 extends Phaser.Scene {
             door_modal.setAlpha(0);
             door_modal_background.disableInteractive();
             close_door.disableInteractive();
+        })
+
+
+        let dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let dresser1 = this.add.image(-45, 111, 'dresser');
+        let close_dresser = this.add.text(-50, 300, 'Close');
+        let dresser_modal = this.add.container(500, 190);
+        dresser_modal.add([dresser_modal_background, dresser1, close_dresser]);
+        dresser_modal.setAlpha(0);
+        
+        dresser.on('pointerover', () => {
+            dresser.setTint(0xcccccc);
+        });
+        dresser.on('pointerout', () => {
+            dresser.clearTint();
+        });
+        dresser.on('pointerup', () => {
+            dresser_modal.setAlpha(9);
+            dresser_modal_background.setInteractive();
+            close_dresser.setInteractive();
+
+        })
+
+        close_dresser.on('pointerup', () => {
+            dresser_modal.setAlpha(0);
+            dresser_modal_background.disableInteractive();
+            close_dresser.disableInteractive();
         })
 
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
@@ -236,17 +292,10 @@ export class Room1 extends Phaser.Scene {
         painting_on_bed.setAngle(-10);
         painting_on_bed.setAlpha(0);
 
-       
-        
-
-        
-        dresser.setScale(.63);
         
         
         
         screwdriver1.setScale(.5);
-       
-        
        
         screwdriver1.on('pointerup', ()=>{
             screwdriverContainer.setAlpha(.9);
@@ -283,6 +332,12 @@ export class Room1 extends Phaser.Scene {
 
         inventory_screwdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
        inventory_screwdriver.setAlpha(0);
+        inventory_screwdriver.on('pointerover', () => {
+            inventory_screwdriver.setTint(0xcccccc);
+        });
+        inventory_screwdriver.on('pointerout', () => {
+            inventory_screwdriver.clearTint();
+        });
         inventory = this.add.container(120, 630);
         inventory.add(inventory_screwdriver);
         let screwdriverCollideWithPainting = false;
@@ -345,13 +400,13 @@ export class Room1 extends Phaser.Scene {
             painting_on_wall.disableInteractive();
         }
 
-        let x = this.add.text(100, 300, '');
-        let y = this.add.text(100, 320, '');
+        // let x = this.add.text(100, 300, '');
+        // let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;
-            x.setText('x: ' + gameObject.x)
-            y.setText('y: ' + gameObject.y)
+            // x.setText('x: ' + gameObject.x)
+            // y.setText('y: ' + gameObject.y)
 
         })
     }
