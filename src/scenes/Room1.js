@@ -34,10 +34,15 @@ export class Room1 extends Phaser.Scene {
         this.load.image('picture_frame_back', 'assets/picture_frame_back.png');
         this.load.image('picture_frame_back1', 'assets/picture_frame_back1.png');
         this.load.image('box_key', 'assets/box_key.png');
+        this.load.image('door', 'assets/door.png');
+        this.load.image('door1', 'assets/door1.png');
     }
 
     create() {
         let room1 = this.add.image(0, 0, 'room1').setOrigin(0, 0);
+        let door = this.add.image(545, 201, 'door').setInteractive();
+        door.setScale(.7, .65);
+
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
         let dresser = this.add.image(665, 319, 'dresser').setInteractive();
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
@@ -62,6 +67,25 @@ export class Room1 extends Phaser.Scene {
         let painting_modal = this.add.container(500, 190);
         painting_modal.add([painting_modal_background, mansion_painting, close_mansion_painting]);
         painting_modal.setAlpha(0);
+
+        let door_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let door1 = this.add.image(-45, 111, 'door1').setScale(.6);
+        let close_door = this.add.text(-50, 300, 'Close');
+        let door_modal = this.add.container(500, 190);
+        door_modal.add([door_modal_background, door1, close_door]);
+        door_modal.setAlpha(0);
+
+        door.on('pointerup', () => {
+            door_modal.setAlpha(9);
+            door_modal_background.setInteractive();
+            close_door.setInteractive();
+        })
+
+        close_door.on('pointerup', () => {
+            door_modal.setAlpha(0);
+            door_modal_background.disableInteractive();
+            close_door.disableInteractive();
+        })
 
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let picture_frame_back1 = this.add.image(-100, 70, 'picture_frame_back1');
@@ -155,13 +179,14 @@ export class Room1 extends Phaser.Scene {
         
         let box_key_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let box_key1 = this.add.image(-45, 111, 'box_key');
-        let close_box_key = this.add.text(-50, 300, 'Close').setInteractive();
+        let close_box_key = this.add.text(-50, 300, 'Close');
         let box_key_modal = this.add.container(500, 190);
         box_key_modal.add([box_key_modal_background, box_key1, close_box_key]);
         box_key_modal.setAlpha(0);
         box_key.on('pointerup', ()=>{
             box_key_modal.setAlpha(.9);
             taylor_modal.setAlpha(0);
+            close_box_key.setInteractive();
         });
 
         close_box_key.on('pointerup', () => {
@@ -172,6 +197,7 @@ export class Room1 extends Phaser.Scene {
                 delay: 500,
                 duration: 1000
             })
+            close_box_key.disableInteractive();
         });
         
         

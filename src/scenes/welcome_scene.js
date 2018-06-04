@@ -10,5 +10,8 @@ export class Welcome_scene extends Phaser.Scene {
     create() {
         this.add.text(100, 100, 'Welcome to the Escape Room!', { fill: '#0f0' });
       let start = this.add.text(450, 400, 'Start').setInteractive();
+      start.on('pointerup', ()=>{
+          this.scene.start('Room1');
+      })
     }
 }
