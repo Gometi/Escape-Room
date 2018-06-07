@@ -4,9 +4,13 @@ function rotate(tweens, image, angle){
  tweens.add({
      targets: image,
      angle: angle,
-     duration: 1000
+     duration: 1000,
+     onStart: () => image.disableInteractive(),
+     onComplete: () => image.setInteractive()
  })
 }
+
+
 
 function success(angle1, angle2, angle3, angle4){
     if(angle1 == 0 && angle2 == 0 && angle3 == 0 && angle4 == 0){

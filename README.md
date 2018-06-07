@@ -23,10 +23,10 @@ This is a game where the player tries to escape from a Mansion by looking for cl
 - Create game logic: like what the player has to do to navigate through the rooms, solve puzzles and find clues
 
 ## POST MVP
-- Create a login page for players (Auth)
 - Adding sounds and animations
 - Drag and Drop (moving objects on the screen)
 
-## Additional Libraries
-- Node, Express or Rails
+## Technologies Used
 - Phaser
+- Cinema 4d
+- Webpack

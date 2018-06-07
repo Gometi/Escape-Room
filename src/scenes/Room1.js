@@ -207,7 +207,7 @@ export class Room1 extends Phaser.Scene {
    
         taylor1.on('pointerup', ()=>{
             let rotateImage = this.tweens;
-            taylorMinigame.rotate(rotateImage, taylor1, taylor1.angle);
+            taylorMinigame.rotate(rotateImage, taylor1, taylor1.angle, taylor2.angle, taylor3.angle, taylor4.angle);
             this.time.addEvent({delay: 1100, callback: checkResult})
         });
         let movekey = this.tweens;
@@ -227,6 +227,7 @@ export class Room1 extends Phaser.Scene {
                 taylor3.disableInteractive();
                 taylor4.disableInteractive();
                 box_key.setInteractive();
+                picture_frame_back.disableInteractive();
             }
         }
 
