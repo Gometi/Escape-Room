@@ -10,6 +10,7 @@ let inventory_screwdriver;
 let paintingFallComplete;
 let paintingFallStart;
 let inventory_key;
+let keyCollideWithDresser = false;
 
 export class Room1 extends Phaser.Scene {
     constructor(test) {
@@ -151,11 +152,15 @@ export class Room1 extends Phaser.Scene {
 
         let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let open_dresser = this.add.image(-45, 111, 'open_dresser');
-        let close_open_dresser = this.add.text(-50, 300, 'Close');
+        open_dresser.setScale(.6);
+        let close_open_dresser = this.add.text(-50, 340, 'Close');
+        close_open_dresser.on('pointerup', ()=>{
+            open_dresser_modal.setAlpha(0);
+        })
         let open_dresser_modal = this.add.container(500, 190);
-        // let hair_pin = this.add.image(-45, 111, 'hair_pin').setInteractive();
-        // this.input.setDraggable(hair_pin)
-        open_dresser_modal.add([open_dresser_modal_background, open_dresser, close_open_dresser]);
+        let hair_pin = this.add.image(-54, 200, 'hair_pin');
+        hair_pin.setScale(.3)
+        open_dresser_modal.add([open_dresser_modal_background, open_dresser, hair_pin, close_open_dresser]);
         open_dresser_modal.setAlpha(0);
 
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
@@ -407,21 +412,22 @@ export class Room1 extends Phaser.Scene {
          
 
         this.physics.add.overlap(inventory_key, dresser, openDresser);
-        let keyCollideWithDresser = false;
-        // let errorText = this.add.text(382, 562, "This KEY doesn't fit!");
-        // errorText.setAlpha(0);
-        let showErrorMessaage = this.tweens;
+        
+       
         function openDresser() {
             dresser.body.enable = false;
-            console.log('fdfd')
-            // showErrorMessaage.add({
-            //     targets: errorText,
-            //     delay: 200,
-            //     alpha: 1,
-            //     duration: 2000,
-            //     yoyo: true
-            // })
+            keyCollideWithDresser = true;
         }
+
+        inventory_key.on('pointerup', ()=>{
+            if(keyCollideWithDresser){
+                open_dresser_modal.setAlpha(.9);
+                open_dresser_modal_background.setInteractive();
+                close_open_dresser.setInteractive();
+                hair_pin.setInteractive();
+                inventory_key.setAlpha(0);
+            }
+        })
 
 
 
