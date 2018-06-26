@@ -7,10 +7,10 @@ let painting_on_wall;
 let painting_on_bed;
 let inventory;
 let inventory_screwdriver;
-let paintingFallComplete;
-let paintingFallStart;
 let inventory_key;
 let keyCollideWithDresser = false;
+let screwdriverCollideWithPainting = false;
+let timedEvent;
 
 export class Room1 extends Phaser.Scene {
     constructor(test) {
@@ -363,14 +363,30 @@ export class Room1 extends Phaser.Scene {
         });
         inventory = this.add.container(120, 630);
         inventory.add(inventory_screwdriver);
-        let screwdriverCollideWithPainting = false;
         inventory_screwdriver.on('pointerup', ()=>{
-            if (screwdriverCollideWithPainting){
+            screwdriverCollideWithPainting = false;
+            timedEvent.addEvent({delay: 5, callback: ()=>{
+                if (screwdriverCollideWithPainting){
                 this.tweens.add({
                     targets: inventory_screwdriver,
                     alpha: 0,
-                    duration: 1000,
+                    duration: 200,
+                    onComplete: ()=>{
+                        inventory_screwdriver.destroy()
+                    }
                 });
+
+                    this.tweens.add({
+                        targets: painting,
+                        y: 215,
+                        angle: -10,
+                        duration: 1000,
+                        delay: 500
+                    })
+                    painting.anims.play('fall');
+                    this.time.addEvent({ delay: 500, callback: painting_fall_start });
+                    this.time.addEvent({ delay: 2000, callback: painting_fall_complete });
+                    
             }
             else{
                 this.tweens.add({
@@ -382,55 +398,10 @@ export class Room1 extends Phaser.Scene {
                     delay: 200
                 });
             }
+            }})
+          
             
         });
-
-        this.physics.add.overlap(inventory_screwdriver, painting_on_wall, painting_falls);
-        paintingFallComplete = this.time;
-        paintingFallStart = this.time;
-        let movePaintingDown = this.tweens;
-        function painting_falls() {
-            console.log('overlap')
-            screwdriverCollideWithPainting = true;
-            painting_on_wall.body.enable = false;
-            movePaintingDown.add({
-                targets: painting,
-                y: 215,
-                angle: -10,
-                duration: 1000,
-                delay: 400
-            })
-            painting.anims.play('fall');
-            paintingFallComplete.addEvent({ delay: 2000, callback: painting_fall_complete });
-            paintingFallStart.addEvent({ delay: 400, callback: painting_fall_start });
-        }
-
-        inventory_key = this.physics.add.image(300, 0, 'box_key').setScale(.2);
-        inventory_key.setAlpha(0);
-
-        inventory.add(inventory_key);
-         
-
-        this.physics.add.overlap(inventory_key, dresser, openDresser);
-        
-       
-        function openDresser() {
-            dresser.body.enable = false;
-            keyCollideWithDresser = true;
-        }
-
-        inventory_key.on('pointerup', ()=>{
-            if(keyCollideWithDresser){
-                open_dresser_modal.setAlpha(.9);
-                open_dresser_modal_background.setInteractive();
-                close_open_dresser.setInteractive();
-                hair_pin.setInteractive();
-                inventory_key.setAlpha(0);
-            }
-        })
-
-
-
 
         function painting_fall_complete() {
             painting.setAlpha(0);
@@ -438,10 +409,61 @@ export class Room1 extends Phaser.Scene {
             painting_on_bed.setInteractive();
         }
 
-        function painting_fall_start(){
+        function painting_fall_start() {
             painting_on_wall.setAlpha(0);
             painting_on_wall.disableInteractive();
         }
+
+        this.physics.add.overlap(inventory_screwdriver, painting_on_wall, overlap_painting_screwdriver);
+        
+        function overlap_painting_screwdriver() {
+            screwdriverCollideWithPainting = true;
+            console.log('overlap')
+            
+           
+        }
+
+        inventory_key = this.physics.add.image(300, 0, 'box_key').setScale(.2);
+        inventory_key.setAlpha(0);
+
+        inventory.add(inventory_key);
+         
+       this.physics.add.overlap(inventory_key, dresser, openDresser);
+       
+        function openDresser() {
+            keyCollideWithDresser = true;
+        }
+
+         timedEvent = this.time;
+        let checkOverlap = ()=>{
+            console.log('pointerUp overlap', keyCollideWithDresser)
+             if(keyCollideWithDresser){
+                open_dresser_modal.setAlpha(.9);
+                open_dresser_modal_background.setInteractive();
+                close_open_dresser.setInteractive();
+                hair_pin.setInteractive();
+                inventory_key.setAlpha(0);
+            }
+            else{
+                 this.tweens.add({
+                     targets: inventory_key,
+                     x: 300,
+                     y: 0,
+                     duration: 2000,
+                     ease: 'Power1',
+                     delay: 200
+                 });
+            }
+        }
+        inventory_key.on('pointerup', ()=>{
+            keyCollideWithDresser = false;
+            timedEvent.addEvent({delay: 90, callback: checkOverlap})
+        })
+
+
+
+
+       
 
         // let x = this.add.text(100, 300, '');
         // let y = this.add.text(100, 320, '');
@@ -453,6 +475,8 @@ export class Room1 extends Phaser.Scene {
 
         })
     }
+
+    
 
     
 }
