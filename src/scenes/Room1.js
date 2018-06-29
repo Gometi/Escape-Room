@@ -1,4 +1,9 @@
-let taylorMinigame = require('../taylorMinigame');
+
+import { Bedroom_door } from "../room1/items/Bedroom_door";
+import { Bedroom_dresser } from "../room1/items/Bedroom_dresser";
+import { MansionPainting } from "../room1/items/MansionPainting";
+import { Screwdriver } from "../room1/items/Screwdriver";
+import { Taylor_painting } from "../room1/items/Taylor_painting";
 
 let door;
 let fan;
@@ -44,63 +49,46 @@ export class Room1 extends Phaser.Scene {
     }
 
     create() {
-        let room1 = this.add.image(0, 0, 'room1').setOrigin(0, 0);
+        let room1 = this;
+       
+        
+        let room1_background = this.add.image(0, 0, 'room1').setOrigin(0, 0);
          door = this.physics.add.image(545, 201, 'door').setInteractive();
-        door.setScale(.7, .65);
-        door.on('pointerover', () => {
-            door.setTint(0xcccccc);
-        });
-        door.on('pointerout', () => {
-            door.clearTint();
-        });
-
+        
+        let bedroomDoor = new Bedroom_door(door);
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
         let dresser = this.physics.add.image(665, 319, 'dresser').setInteractive();
-        dresser.setScale(.63);
-
+        let bedroomDresser = new Bedroom_dresser(dresser);
         
 
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
-        picture_frame_back.setScale(.449);
-        picture_frame_back.on('pointerover', () => {
-            picture_frame_back.setTint(0xcccccc);
-        });
-        picture_frame_back.on('pointerout', () => {
-            picture_frame_back.clearTint();
-        });
+        
+       
         painting = this.add.sprite(61, 9, 'painting', 'painting-fall0001.png').setOrigin(0, 0);
         painting_on_wall = this.physics.add.sprite(300, 145, 'painting_on_wall').setInteractive();
-        painting_on_wall.on('pointerover', () => {
-            painting_on_wall.setTint(0xcccccc);
-        });
-        painting_on_wall.on('pointerout', () => {
-            painting_on_wall.clearTint();
-        });
-        painting_on_bed = this.add.sprite(248, 309, 'painting_on_bed').setOrigin(0, 0);
         
+        painting_on_bed = this.add.sprite(248, 309, 'painting_on_bed').setOrigin(0, 0);
+        let mansion_painting = new MansionPainting(painting, picture_frame_back, painting_on_wall, painting_on_bed);
         let screwdriver1 = this.add.image(874, 342, 'screwdriver1').setInteractive();
-        screwdriver1.on('pointerover', () => {
-            screwdriver1.setTint(0xcccccc);
-        });
-        screwdriver1.on('pointerout', () => {
-            screwdriver1.clearTint();
-        });
+        
         let screwdriverBackground = this.add.image(0, 0, 'black').setScale(1.7);
         let screwdriver2 = this.add.image(-45, 111, 'screwdriver2').setScale(.3);
         let takeScrewdriver = this.add.text(-90, 190, 'Take Screwdriver');
         let screwdriverClose = this.add.text(-30, 270, 'Close');
-        let screwdriverContainer = this.add.container(500, 190);
-        screwdriverContainer.setAlpha(0);
-        screwdriverContainer.add([screwdriverBackground, screwdriver2, takeScrewdriver, screwdriverClose]);
+        let screwdriverModal = this.add.container(500, 190);
+        screwdriverModal.setAlpha(0);
+        screwdriverModal.add([screwdriverBackground, screwdriver2, takeScrewdriver, screwdriverClose]);
 
-        
+        let screwdriver_on_table = new Screwdriver(screwdriver1);
         
         let painting_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let mansion_painting = this.add.image(-45, 111, 'mansion_painting');
+        let mansion_picture = this.add.image(-45, 111, 'mansion_painting');
         let close_mansion_painting = this.add.text(-50, 300, 'Close').setInteractive();
         let painting_modal = this.add.container(500, 190);
-        painting_modal.add([painting_modal_background, mansion_painting, close_mansion_painting]);
+        painting_modal.add([painting_modal_background, mansion_picture, close_mansion_painting]);
         painting_modal.setAlpha(0);
+
+        mansion_painting.modal(painting_on_wall, close_mansion_painting, painting_modal);
 
         let door_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let door1 = this.add.image(-45, 111, 'door1').setScale(.6);
@@ -109,18 +97,7 @@ export class Room1 extends Phaser.Scene {
         door_modal.add([door_modal_background, door1, close_door]);
         door_modal.setAlpha(0);
 
-        door.on('pointerup', () => {
-            door_modal.setAlpha(9);
-            door_modal_background.setInteractive();
-            close_door.setInteractive();
-        })
-
-        close_door.on('pointerup', () => {
-            door_modal.setAlpha(0);
-            door_modal_background.disableInteractive();
-            close_door.disableInteractive();
-        })
-
+        bedroomDoor.modal(door, door_modal, door_modal_background, close_door);
 
         let dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let dresser1 = this.add.image(-45, 111, 'dresser');
@@ -129,27 +106,9 @@ export class Room1 extends Phaser.Scene {
 
         dresser_modal.add([dresser_modal_background, dresser1, close_dresser]);
         dresser_modal.setAlpha(0);
-        
-        dresser.on('pointerover', () => {
-            dresser.setTint(0xcccccc);
-        });
-        dresser.on('pointerout', () => {
-            dresser.clearTint();
-        });
-        dresser.on('pointerup', () => {
-            dresser_modal.setAlpha(9);
-            dresser_modal_background.setInteractive();
-            close_dresser.setInteractive();
-
-        })
-
-        close_dresser.on('pointerup', () => {
-            dresser_modal.setAlpha(0);
-            dresser_modal_background.disableInteractive();
-            close_dresser.disableInteractive();
-        })
-
-
+       
+        bedroomDresser.modal(dresser, dresser_modal, dresser_modal_background, close_dresser);
+       
         let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let open_dresser = this.add.image(-45, 111, 'open_dresser');
         open_dresser.setScale(.6);
@@ -163,6 +122,7 @@ export class Room1 extends Phaser.Scene {
         open_dresser_modal.add([open_dresser_modal_background, open_dresser, hair_pin, close_open_dresser]);
         open_dresser_modal.setAlpha(0);
 
+
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let picture_frame_back1 = this.add.image(-100, 70, 'picture_frame_back1');
         picture_frame_back1.setScale(1.4, 1);
@@ -171,6 +131,9 @@ export class Room1 extends Phaser.Scene {
         let taylor2 = this.add.sprite(-30, -50, 'taylor2').setScale(.6);
         let taylor3 = this.add.sprite(-30, 120, 'taylor3').setScale(.6);
         let taylor4 = this.add.sprite(-168, 120, 'taylor4').setScale(.6);
+        
+        let taylorPainting = new Taylor_painting(taylor1, taylor2, taylor3, taylor4, picture_frame_back, box_key, room1);
+
         let taylorClose = this.add.text(-122, 375, 'Close');
         let picture_frame_back2 = this.add.image(-100, 70, 'picture_frame_back1');
         picture_frame_back2.setScale(1.4, 1);
@@ -180,79 +143,13 @@ export class Room1 extends Phaser.Scene {
         taylor_modal.add([taylor_modal_background, picture_frame_back1, box_key, taylor1, taylor2, taylor3, taylor4, taylorClose, picture_frame_back2]);
         taylor_modal.setAlpha(0);
 
-        picture_frame_back.on('pointerup', ()=>{
-            taylor_modal.setAlpha(.9);
-            taylor1.setInteractive();
-            taylor2.setInteractive();
-            taylor3.setInteractive();
-            taylor4.setInteractive();
-            taylorClose.setInteractive();
-            picture_frame_back2.setInteractive();
-            this.tweens.add({
-                targets: picture_frame_back2,
-                y: -500,
-                delay: 200,
-                duration: 3000
-            })
-        });
+        
 
-        taylorClose.on('pointerup', () => {
-            taylor_modal.setAlpha(0);
-            taylor1.disableInteractive();
-            taylor2.disableInteractive();
-            taylor3.disableInteractive();
-            taylor4.disableInteractive();
-            taylorClose.disableInteractive();
-        });
+        taylorPainting.modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose)
 
-        taylor1.setAngle(180);
-        taylor2.setAngle(270);
-        taylor3.setAngle(180);
-        taylor4.setAngle(90);
+        taylorPainting.playMiniGame();
    
-        taylor1.on('pointerup', ()=>{
-            let rotateImage = this.tweens;
-            taylorMinigame.rotate(rotateImage, taylor1, taylor1.angle, taylor2.angle, taylor3.angle, taylor4.angle);
-            this.time.addEvent({delay: 1100, callback: checkResult})
-        });
-        let movekey = this.tweens;
-        function checkResult(){
-            console.log(taylor1.angle)
-            if (taylorMinigame.success(taylor1.angle, taylor2.angle, taylor3.angle, taylor4.angle)) {
-                console.log('win')
-                movekey.add({
-                    targets: box_key,
-                    y: 250,
-                    delay: 800,
-                    ease: 'power2',
-                    duration: 1000
-                })
-                taylor1.disableInteractive();
-                taylor2.disableInteractive();
-                taylor3.disableInteractive();
-                taylor4.disableInteractive();
-                box_key.setInteractive();
-                picture_frame_back.disableInteractive();
-            }
-        }
-
-        taylor2.on('pointerup', () => {
-            let rotateImage = this.tweens;
-            taylorMinigame.rotate(rotateImage, taylor2, taylor2.angle);
-            this.time.addEvent({ delay: 1100, callback: checkResult })
-        });
-
-        taylor3.on('pointerup', () => {
-            let rotateImage = this.tweens;
-            taylorMinigame.rotate(rotateImage, taylor3, taylor3.angle);
-            this.time.addEvent({ delay: 1100, callback: checkResult })
-        });
-
-        taylor4.on('pointerup', () => {
-            let rotateImage = this.tweens;
-            taylorMinigame.rotate(rotateImage, taylor4, taylor4.angle);
-            this.time.addEvent({ delay: 1100, callback: checkResult })
-        });
+       
         
         let box_key_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let box_key1 = this.add.image(-45, 111, 'box_key');
@@ -290,11 +187,9 @@ export class Room1 extends Phaser.Scene {
         this.anims.create({ key: 'rotate', frames: fanFrameNames, repeat: -1 });
         fan.anims.play('rotate');
 
-        close_mansion_painting.on('pointerup', ()=>{
-            painting_modal.setAlpha(0)
-        })
+        
 
-        painting.setScale(.6);
+        
         let paintingFrameNames = this.anims.generateFrameNames('painting', {
             start: 1, end: 13, zeroPad: 4,
             prefix: 'painting-fall', suffix: '.png'
@@ -303,57 +198,12 @@ export class Room1 extends Phaser.Scene {
         this.anims.create({ key: 'fall', frames: paintingFrameNames, delay: 1100,  repeat: 0 });
 
         
-        
-        
-        painting_on_wall.setScale(.63);
-        painting_on_wall.setInteractive();
-        painting_on_wall.on('pointerup', () => {
-            painting_modal.setAlpha(.9);
-        });
-        
-        painting_on_bed.setScale(.655);
-        painting_on_bed.setAngle(-10);
-        painting_on_bed.setAlpha(0);
 
         
-        
-        
-        screwdriver1.setScale(.5);
-       
-        screwdriver1.on('pointerup', ()=>{
-            screwdriverContainer.setAlpha(.9);
-            screwdriverBackground.setInteractive();
-            takeScrewdriver.setInteractive();
-            screwdriverClose.setInteractive();
-        });
-
-        takeScrewdriver.on('pointerup', () => {
-            screwdriverContainer.setAlpha(0);
-            screwdriverBackground.disableInteractive();
-            takeScrewdriver.disableInteractive();
-            screwdriverClose.disableInteractive();
-            screwdriver1.destroy();
-            inventory_screwdriver.setInteractive();
-            this.input.setDraggable(inventory_screwdriver);
-            this.tweens.add({
-                targets:  inventory_screwdriver,
-                alpha: 1,
-                duration: 1300
-            })
-        });
-
-        screwdriverClose.on('pointerup', () => {
-            screwdriverContainer.setAlpha(0);
-            screwdriverBackground.disableInteractive();
-            takeScrewdriver.disableInteractive();
-            screwdriverClose.disableInteractive();
-              
-            
-        });
-
        
 
         inventory_screwdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
+        screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventory_screwdriver, room1);
        inventory_screwdriver.setAlpha(0);
         inventory_screwdriver.on('pointerover', () => {
             inventory_screwdriver.setTint(0xcccccc);
