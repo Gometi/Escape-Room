@@ -1,5 +1,5 @@
 export class Taylor_painting {
-    constructor(taylor1, taylor2, taylor3, taylor4, picture_frame_back, box_key, room1) {
+    constructor(taylor1, taylor2, taylor3, taylor4, dresserKey, room1) {
         taylor1.setAngle(180);
         taylor2.setAngle(270);
         taylor3.setAngle(180);
@@ -8,9 +8,8 @@ export class Taylor_painting {
         this.taylor2 = taylor2;
         this.taylor3 = taylor3;
         this.taylor4 = taylor4;
-        this.box_key = box_key;
+        this.dresserKey = dresserKey;
         this.room1 = room1;
-        this.picture_frame_back = picture_frame_back;
     }
     modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose) {
         picture_frame_back.on('pointerup', () => {
@@ -35,6 +34,7 @@ export class Taylor_painting {
             this.taylor2.disableInteractive();
             this.taylor3.disableInteractive();
             this.taylor4.disableInteractive();
+            picture_frame_back2.disableInteractive();
             taylorClose.disableInteractive();
         });
     }
@@ -59,7 +59,7 @@ export class Taylor_painting {
         if (this.taylor1.angle == 0 && this.taylor2.angle == 0 && this.taylor3.angle == 0 && this.taylor4.angle == 0) {
             console.log('win')
             this.room1.tweens.add({
-                targets: this.box_key,
+                targets: this.dresserKey,
                 y: 250,
                 delay: 800,
                 ease: 'power2',
@@ -69,8 +69,13 @@ export class Taylor_painting {
             this.taylor2.disableInteractive();
             this.taylor3.disableInteractive();
             this.taylor4.disableInteractive();
-            this.box_key.setInteractive();
-            this.picture_frame_back.disableInteractive();
+            this.dresserKey.setInteractive();
+            this.dresserKey.on('pointerover', () => {
+                this.dresserKey.setTint(0xcccccc);
+            });
+            this.dresserKey.on('pointerout', () => {
+                this.dresserKey.clearTint();
+            });
         }
     }
 

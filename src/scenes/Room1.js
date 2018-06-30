@@ -4,6 +4,9 @@ import { Bedroom_dresser } from "../room1/items/Bedroom_dresser";
 import { MansionPainting } from "../room1/items/MansionPainting";
 import { Screwdriver } from "../room1/items/Screwdriver";
 import { Taylor_painting } from "../room1/items/Taylor_painting";
+import { Dresser_key } from "../room1/items/Dresser_key";
+import { Inventory_screwdriver } from "../room1/inventory/Inventory_screwdriver";
+import { Inventory_key } from "../room1/inventory/Inventory_key";
 
 let door;
 let fan;
@@ -11,8 +14,8 @@ let painting;
 let painting_on_wall;
 let painting_on_bed;
 let inventory;
-let inventory_screwdriver;
-let inventory_key;
+let inventoryScrewdriver;
+let inventoryKey;
 let keyCollideWithDresser = false;
 let screwdriverCollideWithPainting = false;
 let timedEvent;
@@ -40,7 +43,7 @@ export class Room1 extends Phaser.Scene {
         this.load.image('mansion_painting', 'assets/mansion_painting.png');
         this.load.image('picture_frame_back', 'assets/picture_frame_back.png');
         this.load.image('picture_frame_back1', 'assets/picture_frame_back1.png');
-        this.load.image('box_key', 'assets/box_key.png');
+        this.load.image('dresserKey', 'assets/box_key.png');
         this.load.image('door', 'assets/door.png');
         this.load.image('door1', 'assets/door1.png');
         this.load.image('open_dresser', 'assets/open_dresser.png');
@@ -57,6 +60,16 @@ export class Room1 extends Phaser.Scene {
         
         let bedroomDoor = new Bedroom_door(door);
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
+        fan.setScale(.6);
+
+        let fanFrameNames = this.anims.generateFrameNames('fan', {
+            start: 1, end: 17, zeroPad: 4,
+            prefix: 'fan', suffix: '.png'
+        });
+
+        this.anims.create({ key: 'rotate', frames: fanFrameNames, repeat: -1 });
+        fan.anims.play('rotate');
+
         let dresser = this.physics.add.image(665, 319, 'dresser').setInteractive();
         let bedroomDresser = new Bedroom_dresser(dresser);
         
@@ -69,6 +82,14 @@ export class Room1 extends Phaser.Scene {
         
         painting_on_bed = this.add.sprite(248, 309, 'painting_on_bed').setOrigin(0, 0);
         let mansion_painting = new MansionPainting(painting, picture_frame_back, painting_on_wall, painting_on_bed);
+
+        let paintingFrameNames = this.anims.generateFrameNames('painting', {
+            start: 1, end: 13, zeroPad: 4,
+            prefix: 'painting-fall', suffix: '.png'
+        });
+
+        this.anims.create({ key: 'fall', frames: paintingFrameNames, delay: 1100, repeat: 0 });
+
         let screwdriver1 = this.add.image(874, 342, 'screwdriver1').setInteractive();
         
         let screwdriverBackground = this.add.image(0, 0, 'black').setScale(1.7);
@@ -126,13 +147,13 @@ export class Room1 extends Phaser.Scene {
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let picture_frame_back1 = this.add.image(-100, 70, 'picture_frame_back1');
         picture_frame_back1.setScale(1.4, 1);
-        let box_key = this.add.image(-168, 120, 'box_key').setScale(.2);
+        let dresserKey = this.add.image(-168, 120, 'dresserKey').setScale(.2);
         let taylor1 = this.add.sprite(-168, -50, 'taylor1').setScale(.6);
         let taylor2 = this.add.sprite(-30, -50, 'taylor2').setScale(.6);
         let taylor3 = this.add.sprite(-30, 120, 'taylor3').setScale(.6);
         let taylor4 = this.add.sprite(-168, 120, 'taylor4').setScale(.6);
         
-        let taylorPainting = new Taylor_painting(taylor1, taylor2, taylor3, taylor4, picture_frame_back, box_key, room1);
+        let taylorPainting = new Taylor_painting(taylor1, taylor2, taylor3, taylor4, dresserKey, room1);
 
         let taylorClose = this.add.text(-122, 375, 'Close');
         let picture_frame_back2 = this.add.image(-100, 70, 'picture_frame_back1');
@@ -140,7 +161,7 @@ export class Room1 extends Phaser.Scene {
         picture_frame_back2.setTint(0x0a0a0a);
         
         let taylor_modal = this.add.container(500, 190);
-        taylor_modal.add([taylor_modal_background, picture_frame_back1, box_key, taylor1, taylor2, taylor3, taylor4, taylorClose, picture_frame_back2]);
+        taylor_modal.add([taylor_modal_background, picture_frame_back1, dresserKey, taylor1, taylor2, taylor3, taylor4, taylorClose, picture_frame_back2]);
         taylor_modal.setAlpha(0);
 
         
@@ -151,170 +172,33 @@ export class Room1 extends Phaser.Scene {
    
        
         
-        let box_key_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let box_key1 = this.add.image(-45, 111, 'box_key');
-        let close_box_key = this.add.text(-50, 300, 'Close');
-        let box_key_modal = this.add.container(500, 190);
-        box_key_modal.add([box_key_modal_background, box_key1, close_box_key]);
-        box_key_modal.setAlpha(0);
-        box_key.on('pointerup', ()=>{
-            box_key_modal.setAlpha(.9);
-            taylor_modal.setAlpha(0);
-            close_box_key.setInteractive();
-        });
+        let dresserKey_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let dresserKey1 = this.add.image(-45, 111, 'dresserKey');
+        let takeKey = this.add.text(-50, 300, 'Take Key.');
+        let dresserKey_modal = this.add.container(500, 190);
+        dresserKey_modal.add([dresserKey_modal_background, dresserKey1, takeKey]);
+        dresserKey_modal.setAlpha(0);
 
-        close_box_key.on('pointerup', () => {
-            box_key_modal.setAlpha(0);
-            this.tweens.add({
-                targets: inventory_key,
-                alpha: 1,
-                delay: 500,
-                duration: 1000
-            })
-            close_box_key.disableInteractive();
-            inventory_key.setInteractive();
-            this.input.setDraggable(inventory_key);
-        });
+        inventoryKey = this.physics.add.image(300, 0, 'dresserKey').setScale(.2);
         
-        
-        fan.setScale(.6);
-
-        let fanFrameNames = this.anims.generateFrameNames('fan', {
-            start: 1, end: 17, zeroPad: 4,
-            prefix: 'fan', suffix: '.png'
-        });
-
-        this.anims.create({ key: 'rotate', frames: fanFrameNames, repeat: -1 });
-        fan.anims.play('rotate');
-
-        
-
-        
-        let paintingFrameNames = this.anims.generateFrameNames('painting', {
-            start: 1, end: 13, zeroPad: 4,
-            prefix: 'painting-fall', suffix: '.png'
-        });
-
-        this.anims.create({ key: 'fall', frames: paintingFrameNames, delay: 1100,  repeat: 0 });
-
-        
-
-        
+        let dresser_key = new Dresser_key;
+        dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, room1);
+       
+        inventoryScrewdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
+        screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventoryScrewdriver, room1);
        
 
-        inventory_screwdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
-        screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventory_screwdriver, room1);
-       inventory_screwdriver.setAlpha(0);
-        inventory_screwdriver.on('pointerover', () => {
-            inventory_screwdriver.setTint(0xcccccc);
-        });
-        inventory_screwdriver.on('pointerout', () => {
-            inventory_screwdriver.clearTint();
-        });
+        let inventory_screwdriver = new Inventory_screwdriver(inventoryScrewdriver, painting, painting_on_bed, painting_on_wall, room1);
+        inventory_screwdriver.overlaps_with_painting();
+
         inventory = this.add.container(120, 630);
-        inventory.add(inventory_screwdriver);
-        inventory_screwdriver.on('pointerup', ()=>{
-            screwdriverCollideWithPainting = false;
-            timedEvent.addEvent({delay: 5, callback: ()=>{
-                if (screwdriverCollideWithPainting){
-                this.tweens.add({
-                    targets: inventory_screwdriver,
-                    alpha: 0,
-                    duration: 200,
-                    onComplete: ()=>{
-                        inventory_screwdriver.destroy()
-                    }
-                });
-
-                    this.tweens.add({
-                        targets: painting,
-                        y: 215,
-                        angle: -10,
-                        duration: 1000,
-                        delay: 500
-                    })
-                    painting.anims.play('fall');
-                    this.time.addEvent({ delay: 500, callback: painting_fall_start });
-                    this.time.addEvent({ delay: 2000, callback: painting_fall_complete });
-                    
-            }
-            else{
-                this.tweens.add({
-                    targets: inventory_screwdriver,
-                    x: 0,
-                    y: 0,
-                    duration: 2000,
-                    ease: 'Power1',
-                    delay: 200
-                });
-            }
-            }})
-          
-            
-        });
-
-        function painting_fall_complete() {
-            painting.setAlpha(0);
-            painting_on_bed.setAlpha(1);
-            painting_on_bed.setInteractive();
-        }
-
-        function painting_fall_start() {
-            painting_on_wall.setAlpha(0);
-            painting_on_wall.disableInteractive();
-        }
-
-        this.physics.add.overlap(inventory_screwdriver, painting_on_wall, overlap_painting_screwdriver);
-        
-        function overlap_painting_screwdriver() {
-            screwdriverCollideWithPainting = true;
-            console.log('overlap')
-            
-           
-        }
-
-        inventory_key = this.physics.add.image(300, 0, 'box_key').setScale(.2);
-        inventory_key.setAlpha(0);
-
-        inventory.add(inventory_key);
-         
-       this.physics.add.overlap(inventory_key, dresser, openDresser);
+        inventory.add(inventoryScrewdriver);
        
-        function openDresser() {
-            keyCollideWithDresser = true;
-        }
+        inventory.add(inventoryKey);
+        let inventory_key = new Inventory_key(inventoryKey, dresser, room1)
 
-         timedEvent = this.time;
-        let checkOverlap = ()=>{
-            console.log('pointerUp overlap', keyCollideWithDresser)
-             if(keyCollideWithDresser){
-                open_dresser_modal.setAlpha(.9);
-                open_dresser_modal_background.setInteractive();
-                close_open_dresser.setInteractive();
-                hair_pin.setInteractive();
-                inventory_key.setAlpha(0);
-            }
-            else{
-                 this.tweens.add({
-                     targets: inventory_key,
-                     x: 300,
-                     y: 0,
-                     duration: 2000,
-                     ease: 'Power1',
-                     delay: 200
-                 });
-            }
-        }
-        inventory_key.on('pointerup', ()=>{
-            keyCollideWithDresser = false;
-            timedEvent.addEvent({delay: 90, callback: checkOverlap})
-        })
-
-
-
-
-       
-
+        inventory_key.overlaps_with_dresser(open_dresser_modal, open_dresser_modal_background, close_open_dresser, hair_pin);
+      
         // let x = this.add.text(100, 300, '');
         // let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
