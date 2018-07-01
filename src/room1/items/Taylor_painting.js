@@ -18,6 +18,7 @@ export class Taylor_painting {
     }
     
     modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose) {
+        taylorClose.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(taylorClose, this.room1, true)
         picture_frame_back.on('pointerup', () => {
             taylor_modal.setAlpha(.9);

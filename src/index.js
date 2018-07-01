@@ -1,6 +1,7 @@
 import 'phaser';
 
-import { Welcome_scene } from './scenes/Welcome_scene';
+import { Welcome } from './scenes/Welcome';
+import { Intro } from "./scenes/Intro";
 import { Room1 } from "./scenes/Room1";
 
 const gameConfig = {
@@ -14,7 +15,8 @@ const gameConfig = {
         }
     },
     scene: [
-        Welcome_scene,
+        Welcome,
+        Intro,
         Room1
         
     ]

@@ -9,6 +9,7 @@ export class Bedroom_dresser{
    
 
     modal(dresser, dresser_modal, dresser_modal_background, close_dresser){
+        close_dresser.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(close_dresser, this.room1, true);
         dresser.on('pointerup', () => {
             dresser_modal.setAlpha(.9);

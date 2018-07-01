@@ -18,6 +18,7 @@ export class MansionPainting{
     
 
     modal(painting_on_wall, close_mansion_painting, painting_modal, painting_modal_background){
+        close_mansion_painting.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(close_mansion_painting, this.room1, true);
         painting_on_wall.on('pointerup', () => {
             painting_modal.setAlpha(.9);

@@ -5,6 +5,7 @@ export class Dresser_key{
     }
 
     modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventory_key, picture_frame_back, dresserKey_modal_background, room1){
+        takeKey.setColor('#2cf469').setBackgroundColor('#363836').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(takeKey, room1, true)
         dresserKey.on('pointerup', () => {
             dresserKey_modal.setAlpha(.9);

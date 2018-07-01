@@ -8,6 +8,8 @@ export class Screwdriver {
     
    
     modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventory_screwdriver, room1){
+        takeScrewdriver.setColor('#2cf469').setBackgroundColor('#363836').setFontFamily('Arial Black').setPadding(5);
+        screwdriverClose.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(takeScrewdriver, room1, true);
         changeCursorOnHover(screwdriverClose, room1, true);
 

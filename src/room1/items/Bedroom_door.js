@@ -10,6 +10,7 @@ export class Bedroom_door{
 
     modal(door, door_modal, door_modal_background, close_door){
         changeCursorOnHover(close_door, this.room1, true);
+        close_door.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         door.on('pointerup', () => {
             door_modal.setAlpha(.9);
             door_modal_background.setInteractive();
