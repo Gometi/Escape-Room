@@ -1,12 +1,9 @@
+let changeCursorOnHover = require('../changeCursorOnHover');
+
 export class Inventory_key{
     constructor(inventoryKey, dresser, room1) {
         inventoryKey.setAlpha(0);
-        inventoryKey.on('pointerover', () => {
-            inventoryKey.setTint(0xcccccc);
-        });
-        inventoryKey.on('pointerout', () => {
-            inventoryKey.clearTint();
-        });
+       changeCursorOnHover(inventoryKey, room1, true)
 
         this.inventoryKey = inventoryKey;
         this.keyCollideWithDresser = false;
@@ -15,6 +12,9 @@ export class Inventory_key{
     }
 
     overlaps_with_dresser(open_dresser_modal, open_dresser_modal_background, close_open_dresser, hair_pin){
+        changeCursorOnHover(close_open_dresser, this.room1, true);
+        changeCursorOnHover(hair_pin, this.room1, true);
+        
         this.inventoryKey.on('pointerup', () => {
             this.keyCollideWithDresser = false;
             this.room1.time.addEvent({ delay: 90, callback: ()=>{

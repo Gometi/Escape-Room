@@ -52,13 +52,13 @@ export class Room1 extends Phaser.Scene {
     }
 
     create() {
+        this.sys.canvas.style.cssText = 'cursor: url(assets/Normal_Select.cur), auto';
         let room1 = this;
-       
         
         let room1_background = this.add.image(0, 0, 'room1').setOrigin(0, 0);
          door = this.physics.add.image(545, 201, 'door').setInteractive();
         
-        let bedroomDoor = new Bedroom_door(door);
+        let bedroomDoor = new Bedroom_door(door, room1);
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
         fan.setScale(.6);
 
@@ -71,7 +71,7 @@ export class Room1 extends Phaser.Scene {
         fan.anims.play('rotate');
 
         let dresser = this.physics.add.image(665, 319, 'dresser').setInteractive();
-        let bedroomDresser = new Bedroom_dresser(dresser);
+        let bedroomDresser = new Bedroom_dresser(dresser, room1);
         
 
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
@@ -81,7 +81,7 @@ export class Room1 extends Phaser.Scene {
         painting_on_wall = this.physics.add.sprite(300, 145, 'painting_on_wall').setInteractive();
         
         painting_on_bed = this.add.sprite(248, 309, 'painting_on_bed').setOrigin(0, 0);
-        let mansion_painting = new MansionPainting(painting, picture_frame_back, painting_on_wall, painting_on_bed);
+        let mansion_painting = new MansionPainting(painting, picture_frame_back, painting_on_wall, painting_on_bed, room1);
 
         let paintingFrameNames = this.anims.generateFrameNames('painting', {
             start: 1, end: 13, zeroPad: 4,
@@ -100,19 +100,19 @@ export class Room1 extends Phaser.Scene {
         screwdriverModal.setAlpha(0);
         screwdriverModal.add([screwdriverBackground, screwdriver2, takeScrewdriver, screwdriverClose]);
 
-        let screwdriver_on_table = new Screwdriver(screwdriver1);
+        let screwdriver_on_table = new Screwdriver(screwdriver1, room1);
         
         let painting_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let mansion_picture = this.add.image(-45, 111, 'mansion_painting');
-        let close_mansion_painting = this.add.text(-50, 300, 'Close').setInteractive();
+        let close_mansion_painting = this.add.text(-50, 300, 'Close');
         let painting_modal = this.add.container(500, 190);
         painting_modal.add([painting_modal_background, mansion_picture, close_mansion_painting]);
         painting_modal.setAlpha(0);
 
-        mansion_painting.modal(painting_on_wall, close_mansion_painting, painting_modal);
+        mansion_painting.modal(painting_on_wall, close_mansion_painting, painting_modal, painting_modal_background);
 
         let door_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let door1 = this.add.image(-45, 111, 'door1').setScale(.6);
+        let door1 = this.add.image(-45, 56, 'door1').setScale(.6);
         let close_door = this.add.text(-50, 300, 'Close');
         let door_modal = this.add.container(500, 190);
         door_modal.add([door_modal_background, door1, close_door]);
@@ -174,15 +174,15 @@ export class Room1 extends Phaser.Scene {
         
         let dresserKey_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let dresserKey1 = this.add.image(-45, 111, 'dresserKey');
-        let takeKey = this.add.text(-50, 300, 'Take Key.');
+        let takeKey = this.add.text(-50, 300, 'Take Key');
         let dresserKey_modal = this.add.container(500, 190);
         dresserKey_modal.add([dresserKey_modal_background, dresserKey1, takeKey]);
         dresserKey_modal.setAlpha(0);
 
         inventoryKey = this.physics.add.image(300, 0, 'dresserKey').setScale(.2);
         
-        let dresser_key = new Dresser_key;
-        dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, room1);
+        let dresser_key = new Dresser_key(dresserKey, room1);
+        dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, dresserKey_modal_background, room1);
        
         inventoryScrewdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
         screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventoryScrewdriver, room1);

@@ -1,16 +1,16 @@
+let changeCursorOnHover = require('../changeCursorOnHover');
+
 export class Screwdriver {
-    constructor(screwdriver1) {
+    constructor(screwdriver1, room1) {
         screwdriver1.setScale(.5);
-        screwdriver1.on('pointerover', () => {
-            screwdriver1.setTint(0xa1a5ad);
-        });
-        screwdriver1.on('pointerout', () => {
-            screwdriver1.clearTint();
-        });
+        changeCursorOnHover(screwdriver1, room1, true);
     }
     
    
     modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventory_screwdriver, room1){
+        changeCursorOnHover(takeScrewdriver, room1, true);
+        changeCursorOnHover(screwdriverClose, room1, true);
+
         screwdriver1.on('pointerup', () => {
         screwdriverModal.setAlpha(.9);
         screwdriverBackground.setInteractive();

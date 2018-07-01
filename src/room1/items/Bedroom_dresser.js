@@ -1,18 +1,17 @@
+let changeCursorOnHover = require('../changeCursorOnHover');
+
 export class Bedroom_dresser{
-    constructor(dresser) {
+    constructor(dresser, room1) {
         dresser.setScale(.63);
-        dresser.on('pointerover', () => {
-            dresser.setTint(0xcccccc);
-        });
-        dresser.on('pointerout', () => {
-            dresser.clearTint();
-        });
+       changeCursorOnHover(dresser, room1, true);
+       this.room1 = room1;
     }
    
 
     modal(dresser, dresser_modal, dresser_modal_background, close_dresser){
+        changeCursorOnHover(close_dresser, this.room1, true);
         dresser.on('pointerup', () => {
-            dresser_modal.setAlpha(9);
+            dresser_modal.setAlpha(.9);
             dresser_modal_background.setInteractive();
             close_dresser.setInteractive();
 

@@ -1,12 +1,9 @@
+let changeCursorOnHover = require('../changeCursorOnHover');
+
 export class Inventory_screwdriver {
     constructor(inventoryScrewdriver, painting, painting_on_bed, painting_on_wall, room1) {
         inventoryScrewdriver.setAlpha(0);
-        inventoryScrewdriver.on('pointerover', () => {
-            inventoryScrewdriver.setTint(0xcccccc);
-        });
-        inventoryScrewdriver.on('pointerout', () => {
-            inventoryScrewdriver.clearTint();
-        });
+        changeCursorOnHover(inventoryScrewdriver, room1, true)
 
         this.inventoryScrewdriver = inventoryScrewdriver;
         this.screwdriverCollideWithPainting = false;

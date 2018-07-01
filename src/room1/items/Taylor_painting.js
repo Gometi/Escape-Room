@@ -1,3 +1,4 @@
+let changeCursorOnHover = require('../changeCursorOnHover');
 export class Taylor_painting {
     constructor(taylor1, taylor2, taylor3, taylor4, dresserKey, room1) {
         taylor1.setAngle(180);
@@ -10,8 +11,14 @@ export class Taylor_painting {
         this.taylor4 = taylor4;
         this.dresserKey = dresserKey;
         this.room1 = room1;
+        changeCursorOnHover(taylor1, room1);
+        changeCursorOnHover(taylor2, room1);
+        changeCursorOnHover(taylor3, room1);
+        changeCursorOnHover(taylor4, room1);
     }
+    
     modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose) {
+        changeCursorOnHover(taylorClose, this.room1, true)
         picture_frame_back.on('pointerup', () => {
             taylor_modal.setAlpha(.9);
             this.taylor1.setInteractive();
@@ -70,12 +77,7 @@ export class Taylor_painting {
             this.taylor3.disableInteractive();
             this.taylor4.disableInteractive();
             this.dresserKey.setInteractive();
-            this.dresserKey.on('pointerover', () => {
-                this.dresserKey.setTint(0xcccccc);
-            });
-            this.dresserKey.on('pointerout', () => {
-                this.dresserKey.clearTint();
-            });
+            
         }
     }
 
