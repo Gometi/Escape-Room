@@ -171,7 +171,7 @@ export class Room1 extends Phaser.Scene {
 
         
 
-        taylorPainting.modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose)
+        taylorPainting.modal(picture_frame_back, picture_frame_back2, taylor_modal, taylor_modal_background, taylorClose)
 
         taylorPainting.playMiniGame();
    
@@ -187,7 +187,7 @@ export class Room1 extends Phaser.Scene {
         inventoryKey = this.physics.add.image(300, 20, 'dresserKey').setScale(.2);
         
         let dresser_key = new Dresser_key(dresserKey, room1);
-        dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, dresserKey_modal_background, room1);
+        dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, dresserKey_modal_background, taylor_modal_background, taylorClose, room1);
        
         inventoryScrewdriver = this.physics.add.image(0, 20, 'screwdriver2').setScale(.2);
         screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventoryScrewdriver, room1);

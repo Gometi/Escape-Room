@@ -17,7 +17,7 @@ export class Taylor_painting {
         changeCursorOnHover(taylor4, room1);
     }
     
-    modal(picture_frame_back, picture_frame_back2, taylor_modal, taylorClose) {
+    modal(picture_frame_back, picture_frame_back2, taylor_modal, taylor_modal_background, taylorClose) {
         taylorClose.setBackgroundColor('#5e5f60').setFontFamily('Arial Black').setPadding(5);
         changeCursorOnHover(taylorClose, this.room1, true)
         picture_frame_back.on('pointerup', () => {
@@ -26,6 +26,7 @@ export class Taylor_painting {
             this.taylor2.setInteractive();
             this.taylor3.setInteractive();
             this.taylor4.setInteractive();
+            taylor_modal_background.setInteractive();
             taylorClose.setInteractive();
             picture_frame_back2.setInteractive();
             this.room1.tweens.add({
@@ -42,6 +43,7 @@ export class Taylor_painting {
             this.taylor2.disableInteractive();
             this.taylor3.disableInteractive();
             this.taylor4.disableInteractive();
+            taylor_modal_background.disableInteractive();
             picture_frame_back2.disableInteractive();
             taylorClose.disableInteractive();
         });
