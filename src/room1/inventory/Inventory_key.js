@@ -29,7 +29,7 @@ export class Inventory_key{
                     this.room1.tweens.add({
                         targets: this.inventoryKey,
                         x: 300,
-                        y: 0,
+                        y: 20,
                         duration: 2000,
                         ease: 'Power1',
                         delay: 200

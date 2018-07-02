@@ -52,6 +52,8 @@ export class Room1 extends Phaser.Scene {
     }
 
     create() {
+        
+
         this.sys.canvas.style.cssText = 'cursor: url(assets/Normal_Select.cur), auto';
         let room1 = this;
         
@@ -103,10 +105,13 @@ export class Room1 extends Phaser.Scene {
         let screwdriver_on_table = new Screwdriver(screwdriver1, room1);
         
         let painting_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let mansion_picture = this.add.image(-45, 111, 'mansion_painting');
+        let mansion_picture = this.add.image(-45, 10, 'mansion_painting');
+        let paintingDescription = this.add.text(-319, 190, 'A painting of a Mansion. It is screwed in pretty tight.');
+        paintingDescription.setFontSize(20).setFontFamily('Comic Sans Ms');
+        paintingDescription.setWordWrapWidth(600);
         let close_mansion_painting = this.add.text(-50, 300, 'Close');
         let painting_modal = this.add.container(500, 190);
-        painting_modal.add([painting_modal_background, mansion_picture, close_mansion_painting]);
+        painting_modal.add([painting_modal_background, mansion_picture, paintingDescription, close_mansion_painting]);
         painting_modal.setAlpha(0);
 
         mansion_painting.modal(painting_on_wall, close_mansion_painting, painting_modal, painting_modal_background);
@@ -155,7 +160,7 @@ export class Room1 extends Phaser.Scene {
         
         let taylorPainting = new Taylor_painting(taylor1, taylor2, taylor3, taylor4, dresserKey, room1);
 
-        let taylorClose = this.add.text(-122, 375, 'Close');
+        let taylorClose = this.add.text(-122, 340, 'Close');
         let picture_frame_back2 = this.add.image(-100, 70, 'picture_frame_back1');
         picture_frame_back2.setScale(1.4, 1);
         picture_frame_back2.setTint(0x0a0a0a);
@@ -179,12 +184,12 @@ export class Room1 extends Phaser.Scene {
         dresserKey_modal.add([dresserKey_modal_background, dresserKey1, takeKey]);
         dresserKey_modal.setAlpha(0);
 
-        inventoryKey = this.physics.add.image(300, 0, 'dresserKey').setScale(.2);
+        inventoryKey = this.physics.add.image(300, 20, 'dresserKey').setScale(.2);
         
         let dresser_key = new Dresser_key(dresserKey, room1);
         dresser_key.modal(dresserKey, dresserKey_modal, taylor_modal, takeKey, inventoryKey, picture_frame_back, dresserKey_modal_background, room1);
        
-        inventoryScrewdriver = this.physics.add.image(0, 0, 'screwdriver2').setScale(.2);
+        inventoryScrewdriver = this.physics.add.image(0, 20, 'screwdriver2').setScale(.2);
         screwdriver_on_table.modal(screwdriver1, screwdriverModal, screwdriverBackground, takeScrewdriver, screwdriverClose, inventoryScrewdriver, room1);
        
 
@@ -208,6 +213,15 @@ export class Room1 extends Phaser.Scene {
             // y.setText('y: ' + gameObject.y)
 
         })
+        this.add.text(20, 580, 'Inventory', { fill: '#96ddbe'});
+
+        let graphics = this.add.graphics();
+        graphics.lineStyle(5, 0xbbe8d4);
+        graphics.beginPath();
+        graphics.moveTo(0, 600);
+        graphics.lineTo(1000, 600);
+        graphics.closePath();
+        graphics.strokePath();
     }
 
     
