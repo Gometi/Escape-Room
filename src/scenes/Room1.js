@@ -16,9 +16,7 @@ let painting_on_bed;
 let inventory;
 let inventoryScrewdriver;
 let inventoryKey;
-let keyCollideWithDresser = false;
-let screwdriverCollideWithPainting = false;
-let timedEvent;
+
 
 export class Room1 extends Phaser.Scene {
     constructor(test) {
@@ -29,7 +27,8 @@ export class Room1 extends Phaser.Scene {
     preload() {
         this.load.atlas('fan', 'assets/fan.png', 'assets/fan.json');
         this.load.image('room1', 'assets/room1.jpg');
-        this.load.image('dresser', 'assets/dresser1.png');
+        this.load.image('dresser', 'assets/dresser.png');
+        this.load.atlas('dresser_anim', 'assets/dresser_anim.png', 'assets/dresser_anim.json');
         this.load.image('taylor1', 'assets/taylor-cutout1.jpg');
         this.load.image('taylor2', 'assets/taylor-cutout2.jpg');
         this.load.image('taylor3', 'assets/taylor-cutout3.jpg');
@@ -72,10 +71,9 @@ export class Room1 extends Phaser.Scene {
         this.anims.create({ key: 'rotate', frames: fanFrameNames, repeat: -1 });
         fan.anims.play('rotate');
 
-        let dresser = this.physics.add.image(665, 319, 'dresser').setInteractive();
-        let bedroomDresser = new Bedroom_dresser(dresser, room1);
-        
-
+        let dresser = this.physics.add.sprite(517, 271, 'dresser_anim', 'image (0).png');
+        let dresser1 = this.physics.add.image(660, 320, 'dresser').setInteractive().setScale(.675);
+       
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
         
        
@@ -125,28 +123,27 @@ export class Room1 extends Phaser.Scene {
 
         bedroomDoor.modal(door, door_modal, door_modal_background, close_door);
 
-        let dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let dresser1 = this.add.image(-45, 111, 'dresser');
-        let close_dresser = this.add.text(-50, 300, 'Close');
-        let dresser_modal = this.add.container(500, 190);
+       
 
-        dresser_modal.add([dresser_modal_background, dresser1, close_dresser]);
-        dresser_modal.setAlpha(0);
+        this.input.setDraggable(dresser1);
+
+        let bedroomDresser = new Bedroom_dresser(dresser, dresser1, room1);
+        bedroomDresser.modal();
        
-        bedroomDresser.modal(dresser, dresser_modal, dresser_modal_background, close_dresser);
+        // bedroomDresser.modal(dresser, dresser_modal, dresser_modal_background, close_dresser);
        
-        let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
-        let open_dresser = this.add.image(-45, 111, 'open_dresser');
-        open_dresser.setScale(.6);
-        let close_open_dresser = this.add.text(-50, 340, 'Close');
-        close_open_dresser.on('pointerup', ()=>{
-            open_dresser_modal.setAlpha(0);
-        })
-        let open_dresser_modal = this.add.container(500, 190);
-        let hair_pin = this.add.image(-54, 200, 'hair_pin');
-        hair_pin.setScale(.3)
-        open_dresser_modal.add([open_dresser_modal_background, open_dresser, hair_pin, close_open_dresser]);
-        open_dresser_modal.setAlpha(0);
+        // let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        // let open_dresser = this.add.image(-45, 111, 'open_dresser');
+        // open_dresser.setScale(.6);
+        // let close_open_dresser = this.add.text(-50, 340, 'Close');
+        // close_open_dresser.on('pointerup', ()=>{
+        //     open_dresser_modal.setAlpha(0);
+        // })
+        // let open_dresser_modal = this.add.container(500, 190);
+        // let hair_pin = this.add.image(-54, 200, 'hair_pin');
+        // hair_pin.setScale(.3)
+        // open_dresser_modal.add([open_dresser_modal_background, open_dresser, hair_pin, close_open_dresser]);
+        // open_dresser_modal.setAlpha(0);
 
 
         let taylor_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
@@ -200,17 +197,17 @@ export class Room1 extends Phaser.Scene {
         inventory.add(inventoryScrewdriver);
        
         inventory.add(inventoryKey);
-        let inventory_key = new Inventory_key(inventoryKey, dresser, room1)
+        let inventory_key = new Inventory_key(inventoryKey, dresser1, room1)
 
-        inventory_key.overlaps_with_dresser(open_dresser_modal, open_dresser_modal_background, close_open_dresser, hair_pin);
+        inventory_key.overlaps_with_dresser(dresser, dresser1);
       
-        // let x = this.add.text(100, 300, '');
-        // let y = this.add.text(100, 320, '');
+        let x = this.add.text(100, 300, '');
+        let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;
-            // x.setText('x: ' + gameObject.x)
-            // y.setText('y: ' + gameObject.y)
+            x.setText('x: ' + gameObject.x)
+            y.setText('y: ' + gameObject.y)
 
         })
         this.add.text(20, 580, 'Inventory', { fill: '#96ddbe'});
