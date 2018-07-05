@@ -28,6 +28,9 @@ export class Room1 extends Phaser.Scene {
         this.load.atlas('fan', 'assets/fan.png', 'assets/fan.json');
         this.load.image('room1', 'assets/room1.jpg');
         this.load.image('dresser', 'assets/dresser.png');
+        this.load.image('closed_dresser', 'assets/closed_dresser.png');
+        this.load.image('opened_dresser', 'assets/opened_dresser.png');
+        this.load.image('opened_dresser1', 'assets/opened_dresser1.png');
         this.load.atlas('dresser_anim', 'assets/dresser_anim.png', 'assets/dresser_anim.json');
         this.load.image('taylor1', 'assets/taylor-cutout1.jpg');
         this.load.image('taylor2', 'assets/taylor-cutout2.jpg');
@@ -72,7 +75,7 @@ export class Room1 extends Phaser.Scene {
         fan.anims.play('rotate');
 
         let dresser = this.physics.add.sprite(517, 271, 'dresser_anim', 'image (0).png');
-        let dresser1 = this.physics.add.image(660, 320, 'dresser').setInteractive().setScale(.675);
+        let dresser1 = this.physics.add.image(660, 320, 'dresser').setInteractive().setScale(.688);
        
         let picture_frame_back = this.add.image(300, 146, 'picture_frame_back').setInteractive();
         
@@ -124,12 +127,12 @@ export class Room1 extends Phaser.Scene {
         bedroomDoor.modal(door, door_modal, door_modal_background, close_door);
 
        
-
-        this.input.setDraggable(dresser1);
-
-        let bedroomDresser = new Bedroom_dresser(dresser, dresser1, room1);
-        bedroomDresser.modal();
        
+        let opened_dresser = room1.add.image(651, 319, 'opened_dresser').setScale(.658).setAlpha(0);
+
+        let bedroomDresser = new Bedroom_dresser(dresser, dresser1, opened_dresser, room1);
+        bedroomDresser.modal();
+      
         // bedroomDresser.modal(dresser, dresser_modal, dresser_modal_background, close_dresser);
        
         // let open_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
@@ -199,7 +202,7 @@ export class Room1 extends Phaser.Scene {
         inventory.add(inventoryKey);
         let inventory_key = new Inventory_key(inventoryKey, dresser1, room1)
 
-        inventory_key.overlaps_with_dresser(dresser, dresser1);
+        inventory_key.overlaps_with_dresser(dresser, dresser1, opened_dresser);
       
         let x = this.add.text(100, 300, '');
         let y = this.add.text(100, 320, '');

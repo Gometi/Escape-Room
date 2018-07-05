@@ -11,7 +11,7 @@ export class Inventory_key{
         room1.physics.add.overlap(inventoryKey, dresser1, ()=> this.keyCollideWithDresser = true);
     }
 
-    overlaps_with_dresser(dresser, dresser1){
+    overlaps_with_dresser(dresser, dresser1, opened_dresser){
         this.inventoryKey.on('pointerup', () => {
             this.keyCollideWithDresser = false;
             this.room1.time.addEvent({
@@ -19,8 +19,10 @@ export class Inventory_key{
                     if (this.keyCollideWithDresser) {
                         dresser.setAlpha(1);
                         dresser1.setAlpha(0);
+                        dresser1.disableInteractive();
                         this.inventoryKey.setAlpha(0);
                         dresser.anims.play('open dresser');
+                        opened_dresser.setAlpha(0.1).setInteractive();
                     }
                     else {
                         this.room1.tweens.add({
