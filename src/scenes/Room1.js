@@ -7,6 +7,8 @@ import { Taylor_painting } from "../room1/items/Taylor_painting";
 import { Dresser_key } from "../room1/items/Dresser_key";
 import { Inventory_screwdriver } from "../room1/inventory/Inventory_screwdriver";
 import { Inventory_key } from "../room1/inventory/Inventory_key";
+import { Hairpin } from "../room1/items/Hairpin";
+import { Inventory_hairpin } from "../room1/inventory/Inventory_hairpin";
 
 let door;
 let fan;
@@ -126,12 +128,20 @@ export class Room1 extends Phaser.Scene {
 
         bedroomDoor.modal(door, door_modal, door_modal_background, close_door);
 
+        let hair_pin = room1.add.image(-73, 145, 'hair_pin').setScale(.2);
        
        
         let opened_dresser = room1.add.image(651, 319, 'opened_dresser').setScale(.658).setAlpha(0);
+        let opened_dresser_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
+        let opened_dresser_image = this.add.image(-22, 117, 'opened_dresser1').setScale(.5);
+        let close_opened_dresser = this.add.text(-50, 300, 'Close');
+        let opened_dresser_modal = this.add.container(500, 190);
+        opened_dresser_modal.add([opened_dresser_modal_background, opened_dresser_image, close_opened_dresser, hair_pin]);
+        opened_dresser_modal.setAlpha(0);
 
-        let bedroomDresser = new Bedroom_dresser(dresser, dresser1, opened_dresser, room1);
-        bedroomDresser.modal();
+        let bedroomDresser = new Bedroom_dresser(dresser, dresser1, opened_dresser, hair_pin, room1);
+        bedroomDresser.modal(opened_dresser_modal_background, opened_dresser_modal, close_opened_dresser);
+
       
         // bedroomDresser.modal(dresser, dresser_modal, dresser_modal_background, close_dresser);
        
@@ -196,6 +206,9 @@ export class Room1 extends Phaser.Scene {
         let inventory_screwdriver = new Inventory_screwdriver(inventoryScrewdriver, painting, painting_on_bed, painting_on_wall, room1);
         inventory_screwdriver.overlaps_with_painting();
 
+        let inventoryHairpin = this.physics.add.image(600, 20, 'hair_pin').setScale(.5);
+        let inventory_hairpin = new Inventory_hairpin(inventoryHairpin, room1);
+
         inventory = this.add.container(120, 630);
         inventory.add(inventoryScrewdriver);
        
@@ -203,14 +216,19 @@ export class Room1 extends Phaser.Scene {
         let inventory_key = new Inventory_key(inventoryKey, dresser1, room1)
 
         inventory_key.overlaps_with_dresser(dresser, dresser1, opened_dresser);
+
+        let hairpin = new Hairpin(hair_pin, room1);
+        hairpin.modal(inventoryHairpin, opened_dresser, opened_dresser_modal, opened_dresser_modal_background, close_opened_dresser);
+        inventory.add(inventoryHairpin);
+        
       
-        let x = this.add.text(100, 300, '');
-        let y = this.add.text(100, 320, '');
+        // let x = this.add.text(100, 300, '');
+        // let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;
-            x.setText('x: ' + gameObject.x)
-            y.setText('y: ' + gameObject.y)
+            // x.setText('x: ' + gameObject.x)
+            // y.setText('y: ' + gameObject.y)
 
         })
         this.add.text(20, 580, 'Inventory', { fill: '#96ddbe'});
