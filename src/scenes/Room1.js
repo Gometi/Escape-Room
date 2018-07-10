@@ -9,6 +9,7 @@ import { Inventory_screwdriver } from "../room1/inventory/Inventory_screwdriver"
 import { Inventory_key } from "../room1/inventory/Inventory_key";
 import { Hairpin } from "../room1/items/Hairpin";
 import { Inventory_hairpin } from "../room1/inventory/Inventory_hairpin";
+import { Keyhole } from "../room1/items/Keyhole";
 
 let door;
 let fan;
@@ -53,6 +54,7 @@ export class Room1 extends Phaser.Scene {
         this.load.image('open_dresser', 'assets/open_dresser.png');
         this.load.image('hair_pin', 'assets/hair_pin.png');
         this.load.image('keyhole', 'assets/keyhole.jpg');
+        this.load.atlas('hairpin_animation', 'assets/hairpin_animation.png', 'assets/hairpin_animation.json');
 
     }
 
@@ -191,10 +193,10 @@ export class Room1 extends Phaser.Scene {
 
         let inventory_screwdriver = new Inventory_screwdriver(inventoryScrewdriver, painting, painting_on_bed, painting_on_wall, room1);
         inventory_screwdriver.overlaps_with_painting();
-
+        
         let inventoryHairpin = this.physics.add.image(600, 20, 'hair_pin').setScale(.5);
         let inventory_hairpin = new Inventory_hairpin(inventoryHairpin, door, room1);
-        inventory_hairpin.overlapsWithDoor();
+        
 
         inventory = this.add.container(120, 630);
         inventory.add(inventoryScrewdriver);
@@ -204,20 +206,27 @@ export class Room1 extends Phaser.Scene {
 
         inventory_key.overlaps_with_dresser(dresser, dresser1, opened_dresser);
 
+        let KeyholeModal = this.add.container(500, 190);
+        let hairpin1 = this.add.sprite(-104, 105, 'hairpin_animation', 'hairpin0010.png');
+
         let hairpin = new Hairpin(hair_pin, room1);
         hairpin.modal(inventoryHairpin, opened_dresser, opened_dresser_modal, opened_dresser_modal_background, close_opened_dresser);
         inventory.add(inventoryHairpin);
 
+        let keyhole = new Keyhole(hairpin1, KeyholeModal, room1);
+        inventory_hairpin.overlapsWithDoor(hairpin1, KeyholeModal);
+       
+
 
         
       
-        // let x = this.add.text(100, 300, '');
-        // let y = this.add.text(100, 320, '');
+        let x = this.add.text(100, 300, '');
+        let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;
-            // x.setText('x: ' + gameObject.x)
-            // y.setText('y: ' + gameObject.y)
+            x.setText('x: ' + gameObject.x)
+            y.setText('y: ' + gameObject.y)
 
         })
         this.add.text(20, 580, 'Inventory', { fill: '#96ddbe'});

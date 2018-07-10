@@ -14,8 +14,8 @@ const gameConfig = {
         }
     },
     scene: [
-        Welcome,
-        Intro,
+        // Welcome,
+        // Intro,
         Room1
         
     ]

@@ -11,7 +11,7 @@ export class Inventory_hairpin{
         room1.physics.add.overlap(inventoryHairpin, door, () => { this.screwdriverCollideWithDoor = true });
     }
 
-    overlapsWithDoor(){
+    overlapsWithDoor(hairpin1, KeyholeModal){
         this.inventoryHairpin.on('pointerup', () => {
             this.screwdriverCollideWithDoor = false;
             this.room1.time.addEvent({
@@ -22,7 +22,9 @@ export class Inventory_hairpin{
                             alpha: 0,
                             duration: 200,
                             onComplete: () => {
-                                this.inventoryHairpin.destroy()
+                                this.inventoryHairpin.destroy();
+                                KeyholeModal.setAlpha(.9);
+                                hairpin1.anims.play('hairpin_anim');
                             }
                         });
 
