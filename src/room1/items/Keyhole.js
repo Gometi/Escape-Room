@@ -96,7 +96,7 @@ export class Keyhole {
     }
 
     checkHairpinPosition(){
-        if(this.hairpin2.angle > 100 && this.hairpin2.angle < 120){
+        if(this.hairpin2.angle > 100 && this.hairpin2.angle < 140){
             this.text.setColor('#5ae8a1').setText('Door Unlocked!')
             this.room1.tweens.add({
                 targets: this.text,
