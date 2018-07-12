@@ -214,8 +214,8 @@ export class Room1 extends Phaser.Scene {
         let hairpin = new Hairpin(hair_pin, room1);
         hairpin.modal(inventoryHairpin, opened_dresser, opened_dresser_modal, opened_dresser_modal_background, close_opened_dresser);
         inventory.add(inventoryHairpin);
-        let controls = this.add.text(-226, 233, 'Use the Left and Right Arrow Keys to Rotate. Press the Spacebar to Unlock the Door');
-        controls.setWordWrapWidth(450);
+        let controls = this.add.text(-226, 233, 'Use the Left and Right Arrow Keys to Rotate the Hairpin. Press the Spacebar to Unlock the Door');
+        controls.setFontFamily('Comic Sans Ms').setWordWrapWidth(480);
         let close_keyhole = room1.add.text(-61, 325, 'Close');
         let keyhole = new Keyhole(hairpin1, hairpin2, inventoryHairpin, keyhole_background, controls, close_keyhole, KeyholeModal, room1);
         keyhole.rotateHairpin();
@@ -226,13 +226,13 @@ export class Room1 extends Phaser.Scene {
 
         
       
-        let x = this.add.text(100, 300, '');
-        let y = this.add.text(100, 320, '');
+        // let x = this.add.text(100, 300, '');
+        // let y = this.add.text(100, 320, '');
         this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
             gameObject.x = dragX;
             gameObject.y = dragY;
-            x.setText('x: ' + gameObject.x)
-            y.setText('y: ' + gameObject.y)
+            // x.setText('x: ' + gameObject.x)
+            // y.setText('y: ' + gameObject.y)
 
         })
         this.add.text(20, 580, 'Inventory', { fill: '#96ddbe'});

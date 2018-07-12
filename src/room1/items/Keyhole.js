@@ -30,6 +30,7 @@ export class Keyhole {
         this.hairpin2 = hairpin2;
         this.text = text;
         this.close = close;
+        this.background = background;
         this.KeyholeModal = KeyholeModal;
     }
 
@@ -100,6 +101,7 @@ export class Keyhole {
                 duration: 800,
                 onComplete: ()=>{
                     this.room1.time.addEvent({delay: 1300, callback: ()=>{
+                        this.background.disableInteractive();
                        this.close.disableInteractive();
                        this.KeyholeModal.setAlpha(0);
                     }});
