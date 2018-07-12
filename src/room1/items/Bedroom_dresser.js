@@ -22,14 +22,14 @@ export class Bedroom_dresser{
    
 
     modal(opened_dresser_modal_background, opened_dresser_modal, close_opened_dresser){
-       
+        let text = this.room1.add.text(-50, 300, "It's Locked").setFontFamily('Comic Sans Ms');
         
         
         let closed_dresser_modal_background = this.room1.add.image(0, 0, 'black').setScale(1.7);
         let closed_dresser_image = this.room1.add.image(-22, 117, 'closed_dresser').setScale(.7);
-        let close = this.room1.add.text(-50, 300, 'Close');
+        let close = this.room1.add.text(-50, 360, 'Close');
         let closed_dresser_modal = this.room1.add.container(500, 190);
-        closed_dresser_modal.add([closed_dresser_modal_background, closed_dresser_image, close]);
+        closed_dresser_modal.add([closed_dresser_modal_background, closed_dresser_image, text, close]);
 
        
 

@@ -45,7 +45,10 @@ export class Keyhole {
 
     }
 
-    unlockDoor(){
+    unlockDoor(door, open_door, door_anim){
+        this.door = door;
+        this.open_door = open_door;
+        this.door_anim = door_anim;
         this.room1.input.keyboard.on('keydown_SPACE', () => {
             this.room1.tweens.add({
                 targets: this.hairpin2,
@@ -103,7 +106,10 @@ export class Keyhole {
                     this.room1.time.addEvent({delay: 1300, callback: ()=>{
                         this.background.disableInteractive();
                        this.close.disableInteractive();
+                       this.door.disableInteractive();
                        this.KeyholeModal.setAlpha(0);
+                       this.open_door.setInteractive();
+                        this.door_anim.anims.play('open_door');
                     }});
                 }
             });

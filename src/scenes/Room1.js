@@ -51,6 +51,7 @@ export class Room1 extends Phaser.Scene {
         this.load.image('dresserKey', 'assets/box_key.png');
         this.load.image('door', 'assets/door.png');
         this.load.image('door1', 'assets/door1.png');
+        this.load.atlas('door_animation', 'assets/door_animation.png', 'assets/door_animation.json');
         this.load.image('open_dresser', 'assets/open_dresser.png');
         this.load.image('hair_pin', 'assets/hair_pin.png');
         this.load.image('hair_pin2', 'assets/hair_pin2.png');
@@ -66,9 +67,12 @@ export class Room1 extends Phaser.Scene {
         let room1 = this;
         
         let room1_background = this.add.image(0, 0, 'room1').setOrigin(0, 0);
-         door = this.physics.add.image(545, 201, 'door').setInteractive();
         
-        let bedroomDoor = new Bedroom_door(door, room1);
+         door = this.physics.add.image(543, 198, 'door');
+         let open_door = this.add.image(544, 206, 'black');
+        let door_anim = this.add.sprite(501, 272, 'door_animation', 'door0000.png');
+        
+        let bedroomDoor = new Bedroom_door(door, door_anim, open_door, room1);
         fan = this.add.sprite(70, 0, 'fan', 'fan0001.png').setOrigin(0, 0);
         fan.setScale(.6);
 
@@ -125,7 +129,7 @@ export class Room1 extends Phaser.Scene {
 
         let door_modal_background = this.add.image(0, 0, 'black').setScale(1.7);
         let door1 = this.add.image(-45, 56, 'door1').setScale(.6);
-        let close_door = this.add.text(-50, 300, 'Close');
+        let close_door = this.add.text(-60, 350, 'Close');
         let door_modal = this.add.container(500, 190);
         door_modal.add([door_modal_background, door1, close_door]);
         door_modal.setAlpha(0);
@@ -219,7 +223,7 @@ export class Room1 extends Phaser.Scene {
         let close_keyhole = room1.add.text(-61, 325, 'Close');
         let keyhole = new Keyhole(hairpin1, hairpin2, inventoryHairpin, keyhole_background, controls, close_keyhole, KeyholeModal, room1);
         keyhole.rotateHairpin();
-        keyhole.unlockDoor();
+        keyhole.unlockDoor(door, open_door, door_anim);
         inventory_hairpin.overlapsWithDoor(hairpin1, hairpin2, controls, keyhole_background, KeyholeModal, close_keyhole);
        
 

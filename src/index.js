@@ -3,6 +3,7 @@ import 'phaser';
 import { Welcome } from './scenes/Welcome';
 import { Intro } from "./scenes/Intro";
 import { Room1 } from "./scenes/Room1";
+import { Room2 } from "./scenes/Room2";
 
 const gameConfig = {
     width: 1024,
@@ -16,7 +17,8 @@ const gameConfig = {
     scene: [
         Welcome,
         Intro,
-        Room1
+        Room1,
+        Room2
         
     ]
 };
