@@ -53,6 +53,7 @@ export class Room1 extends Phaser.Scene {
         this.load.image('door1', 'assets/door1.png');
         this.load.image('open_dresser', 'assets/open_dresser.png');
         this.load.image('hair_pin', 'assets/hair_pin.png');
+        this.load.image('hair_pin2', 'assets/hair_pin2.png');
         this.load.image('keyhole', 'assets/keyhole.jpg');
         this.load.atlas('hairpin_animation', 'assets/hairpin_animation.png', 'assets/hairpin_animation.json');
 
@@ -205,16 +206,21 @@ export class Room1 extends Phaser.Scene {
         let inventory_key = new Inventory_key(inventoryKey, dresser1, room1)
 
         inventory_key.overlaps_with_dresser(dresser, dresser1, opened_dresser);
-
+        let keyhole_background = room1.add.image(0, 0, 'black').setScale(1.7);
         let KeyholeModal = this.add.container(500, 190);
         let hairpin1 = this.add.sprite(-104, 105, 'hairpin_animation', 'hairpin0010.png');
+        let hairpin2 = room1.add.image(-23, -24, 'hair_pin2').setAlpha(0);
 
         let hairpin = new Hairpin(hair_pin, room1);
         hairpin.modal(inventoryHairpin, opened_dresser, opened_dresser_modal, opened_dresser_modal_background, close_opened_dresser);
         inventory.add(inventoryHairpin);
-
-        let keyhole = new Keyhole(hairpin1, KeyholeModal, room1);
-        inventory_hairpin.overlapsWithDoor(hairpin1, KeyholeModal);
+        let controls = this.add.text(-226, 233, 'Use the Left and Right Arrow Keys to Rotate. Press the Spacebar to Unlock the Door');
+        controls.setWordWrapWidth(450);
+        let close_keyhole = room1.add.text(-61, 325, 'Close');
+        let keyhole = new Keyhole(hairpin1, hairpin2, inventoryHairpin, keyhole_background, controls, close_keyhole, KeyholeModal, room1);
+        keyhole.rotateHairpin();
+        keyhole.unlockDoor();
+        inventory_hairpin.overlapsWithDoor(hairpin1, hairpin2, controls, keyhole_background, KeyholeModal, close_keyhole);
        
 
 

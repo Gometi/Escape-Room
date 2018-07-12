@@ -11,7 +11,10 @@ export class Inventory_hairpin{
         room1.physics.add.overlap(inventoryHairpin, door, () => { this.screwdriverCollideWithDoor = true });
     }
 
-    overlapsWithDoor(hairpin1, KeyholeModal){
+    overlapsWithDoor(hairpin1, hairpin2, controls, keyhole_background, KeyholeModal, close_keyhole){
+        this.hairpin1 = hairpin1;
+        this.hairpin2 = hairpin2;
+        this.controls = controls;
         this.inventoryHairpin.on('pointerup', () => {
             this.screwdriverCollideWithDoor = false;
             this.room1.time.addEvent({
@@ -20,22 +23,19 @@ export class Inventory_hairpin{
                         this.room1.tweens.add({
                             targets: this.inventoryHairpin,
                             alpha: 0,
-                            duration: 200,
+                            x: 600,
+                            y: 0,
+                            duration: 100,
                             onComplete: () => {
-                                this.inventoryHairpin.destroy();
+                                keyhole_background.setInteractive();
+                                close_keyhole.setInteractive();
                                 KeyholeModal.setAlpha(.9);
                                 hairpin1.anims.play('hairpin_anim');
+                               
+                                this.moveHairpin();
                             }
                         });
 
-                        
-                        // this.room1.time.addEvent({
-                        //     delay: 2000, callback: () => {
-                        //         this.painting.setAlpha(0);
-                        //         this.painting_on_bed.setAlpha(1);
-                        //         this.painting_on_bed.setInteractive();
-                        //     }
-                        // });
 
                     }
                     else {
@@ -52,6 +52,25 @@ export class Inventory_hairpin{
             })
 
 
+        });
+    }
+    moveHairpin(){
+        this.room1.tweens.add({
+           targets: this.hairpin1,
+           x: 230,
+           y: -214,
+           duration: 2000,
+            ease: 'Power1',
+           delay: 500,
+           onComplete: ()=>{
+               this.hairpin1.setAlpha(0);
+               this.hairpin2.setAlpha(1);
+               this.room1.tweens.add({
+                   targets: this.controls,
+                   alpha: 1,
+                   duration: 1000,
+               });
+           }
         });
     }
 }
