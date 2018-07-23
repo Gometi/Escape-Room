@@ -1,6 +1,33 @@
 <html>
 
 <head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            background: black;
+        }
+        @media only screen and (max-width: 1000px){
+            canvas{
+                transform: scale(.8);
+            }
+        }
+        @media only screen and (max-width: 800px){
+            canvas{
+                transform: scale(.6);
+            }
+        }
+        @media only screen and (max-width: 600px){
+            canvas{
+                transform: scale(.5);
+            }
+        }
+        @media only screen and (max-width: 480px){
+            canvas{
+                transform: scale(.4);
+            }
+        }
+    </style>
 </head>
 
 <body>
